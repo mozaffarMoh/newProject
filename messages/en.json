@@ -1,4 +1,8 @@
 {
+    "language": {
+        "ar": "Arabic",
+        "en": "English"
+    },
     "header": {
         "home": "Home",
         "about": "About",

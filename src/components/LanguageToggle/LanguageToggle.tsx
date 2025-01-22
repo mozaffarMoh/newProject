@@ -1,50 +1,34 @@
-import React from "react";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import {
+  Menu,
+  MenuItem,
+  IconButton,
+  Button,
+  Typography,
+  Box,
+} from "@mui/material";
+import { Language as LanguageIcon } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
-const useStyles = makeStyles({
-  toggleGroup: {
-    direction: "ltr",
-    backgroundColor: "#f2f2f2 ",
-    borderRadius: "50px",
-    padding: "5px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "2px solid white",
-    width: 100, // Adjust to your preferred size
-    height: 35,
-  },
-  toggleButton: {
-    border: "none",
-    height: 28,
-
-    "&.Mui-selected": {
-      backgroundColor: "#ECB740 !important", // Orange color for selected language
-      color: "#fff",
-      borderRadius: "20px",
-    },
-    "&:not(.Mui-selected)": {
-      color: "#ECB740",
-      borderRadius: "20px",
-      padding: "15px",
-    },
-  },
-});
-
-const LanguageToggle = () => {
+const LanguageToggle = ({ isIcon = true }: any) => {
+  let t = useTranslations();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const router = useRouter();
-  const classes = useStyles();
   const pathname = usePathname();
   const langCurrent = pathname?.slice(1, 3) || "en";
 
-  const changeLanguage = (e: any) => {
-    const value = e.target.value;
-    console.log(e.target.value);
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const changeLanguage = (value: string) => {
     if (value) {
       if (value !== langCurrent) {
         const newPathname = `/${value}${pathname.replace(/^\/(en|ar)/, "")}`;
@@ -52,22 +36,40 @@ const LanguageToggle = () => {
         router.push(newPathname);
       }
     }
+    handleMenuClose(); // Close the menu after selecting a language
   };
 
   return (
-    <ToggleButtonGroup
-      value={langCurrent}
-      exclusive
-      onChange={changeLanguage}
-      className={classes.toggleGroup}
-    >
-      <ToggleButton value="ar" className={classes.toggleButton}>
-        AR
-      </ToggleButton>
-      <ToggleButton value="en" className={classes.toggleButton}>
-        EN
-      </ToggleButton>
-    </ToggleButtonGroup>
+    <div>
+      {/* Language Icon Button */}
+      <Box onClick={handleMenuOpen}>
+        {isIcon ? (
+          <IconButton>
+            <LanguageIcon sx={{ color: "#ECB740" }} />
+          </IconButton>
+        ) : (
+          <Typography color="red"> {t("language.ar")}</Typography>
+        )}
+      </Box>
+
+      {/* Language Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          "aria-labelledby": "language-button",
+        }}
+      >
+        <MenuItem onClick={() => changeLanguage("ar")}>
+          {t("language.ar")}
+        </MenuItem>
+        <MenuItem onClick={() => changeLanguage("en")}>
+          {t("language.en")}
+        </MenuItem>
+        {/* Add more languages as needed */}
+      </Menu>
+    </div>
   );
 };
 
