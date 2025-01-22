@@ -27,16 +27,18 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isScreen600 = useMediaQuery("(max-width:650px)");
 
-  const toggleDrawer = (open: boolean) => () => {
-    setDrawerOpen(open);
-  };
-
   const navItems = [
     t("header.home"),
     t("header.about"),
     t("header.services"),
     t("header.contact-us"),
   ];
+
+  const listItemHover = {
+    backgroundColor: "#eee",
+    transition: "all .5s ease-in",
+    cursor: "pointer",
+  };
 
   return (
     <Container sx={{ flexGrow: 1 }}>
@@ -63,7 +65,7 @@ const Header = () => {
 
           {/* Mobile Menu Icon */}
           {isScreen600 && (
-            <IconButton color="inherit" onClick={toggleDrawer(true)}>
+            <IconButton color="inherit" onClick={() => setDrawerOpen(true)}>
               <MenuIcon />
             </IconButton>
           )}
@@ -74,7 +76,7 @@ const Header = () => {
       <Drawer
         anchor={isArabic ? "right" : "left"}
         open={drawerOpen}
-        onClose={toggleDrawer(false)}
+        onClose={() => setDrawerOpen(false)}
       >
         <Box
           sx={{
@@ -83,16 +85,26 @@ const Header = () => {
             paddingTop: 3,
           }}
           role="presentation"
-          onClick={toggleDrawer(false)}
-          onKeyDown={toggleDrawer(false)}
+          onClick={(e) => e.stopPropagation()}
         >
           <List>
             {navItems.map((item) => (
-              <ListItem key={item} sx={{ textAlign: "start" }}>
+              <ListItem
+                key={item}
+                sx={{
+                  textAlign: "start",
+                  "&:hover": listItemHover,
+                }}
+              >
                 <ListItemText primary={item} />
               </ListItem>
             ))}
-            <ListItem>
+            <ListItem
+              sx={{
+                textAlign: "start",
+                "&:hover": listItemHover,
+              }}
+            >
               <LanguageToggle isIcon={false} />
             </ListItem>
           </List>

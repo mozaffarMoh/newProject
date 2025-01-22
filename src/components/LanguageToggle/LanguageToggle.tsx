@@ -19,6 +19,7 @@ const LanguageToggle = ({ isIcon = true }: any) => {
   const router = useRouter();
   const pathname = usePathname();
   const langCurrent = pathname?.slice(1, 3) || "en";
+  const isArabic = langCurrent == "ar";
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,7 +41,7 @@ const LanguageToggle = ({ isIcon = true }: any) => {
   };
 
   return (
-    <div>
+    <Box>
       {/* Language Icon Button */}
       <Box onClick={handleMenuOpen}>
         {isIcon ? (
@@ -48,7 +49,12 @@ const LanguageToggle = ({ isIcon = true }: any) => {
             <LanguageIcon sx={{ color: "#ECB740" }} />
           </IconButton>
         ) : (
-          <Typography color="red"> {t("language.ar")}</Typography>
+          <Box>
+            <Typography color="error">
+              {" "}
+              {!isArabic ? t("language.en") : t("language.ar")}
+            </Typography>
+          </Box>
         )}
       </Box>
 
@@ -69,7 +75,7 @@ const LanguageToggle = ({ isIcon = true }: any) => {
         </MenuItem>
         {/* Add more languages as needed */}
       </Menu>
-    </div>
+    </Box>
   );
 };
 
