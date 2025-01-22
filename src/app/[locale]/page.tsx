@@ -1,7 +1,6 @@
 "use client";
 import type { NextPage } from "next";
 import { Footer, Header, HeroSection } from "@/sections";
-import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 const HomePage: NextPage = () => {
