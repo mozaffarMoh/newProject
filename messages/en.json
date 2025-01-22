@@ -1,0 +1,17 @@
+{
+    "header": {
+        "home": "Home",
+        "about": "About",
+        "services": "Services",
+        "contact-us": "Contact Us"
+    },
+    "hero": {
+        "title": "write here the title",
+        "subTitle": "Write here subtitle"
+    },
+    "footer": {
+        "address": "8290-Abi Al-Arab/2683-Al-Sulaimaniyah",
+        "phone": "Tel.",
+        "website": "www.Etg.Co.Com"
+    }
+}
