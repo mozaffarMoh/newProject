@@ -6,12 +6,9 @@ import { Box, Typography } from "@mui/material";
 const HomePage: NextPage = () => {
   return (
     <>
-      <Box>
-        <Typography>Welcome to New Project</Typography>
-      </Box>
-      {/*   <Header />
+      <Header />
       <HeroSection />
-      <Footer /> */}
+      <Footer />
     </>
   );
 };
