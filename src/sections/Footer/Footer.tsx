@@ -1,6 +1,5 @@
 'use client';
 import { thirdColor } from '@/constant/color';
-import { logoImage } from '@/constant/images';
 import { Container, Stack, Typography, useMediaQuery } from '@mui/material';
 import { useTranslations } from 'next-intl';
 

@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import "./globals.scss";
- import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css"; 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,13 +26,15 @@ export const metadata: Metadata = {
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  // const messages = await getMessages();
+  const { locale } = await params;
+  console.log("locle is : ", await params);
 
- // const messages = await getMessages();
   const isArabic = locale === "ar";
   metadata.title = isArabic ? "مشروع جديد" : "New Project";
 
@@ -43,9 +45,9 @@ export default async function LocaleLayout({
       className={isArabic ? "arabicFont" : "englishFont"}
     >
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-       {/*  <NextIntlClientProvider messages={messages}>
+        {/*  <NextIntlClientProvider messages={messages}>
         </NextIntlClientProvider> */}
-          {children}
+        {children}
       </body>
     </html>
   );
