@@ -3,23 +3,18 @@ import {
   Menu,
   MenuItem,
   IconButton,
-  Button,
   Typography,
   Box,
 } from "@mui/material";
 import { Language as LanguageIcon } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
+import useLanguage from "@/custom-hooks/useLanguage";
 
 const LanguageToggle = ({ isIcon = true }: any) => {
-  let t = useTranslations();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const router = useRouter();
-  const pathname = usePathname();
-  const langCurrent = pathname?.slice(1, 3) || "en";
-  const isArabic = langCurrent == "ar";
+  const { t, currentLang,pathname, isArabic } = useLanguage();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -31,7 +26,7 @@ const LanguageToggle = ({ isIcon = true }: any) => {
 
   const changeLanguage = (value: string) => {
     if (value) {
-      if (value !== langCurrent) {
+      if (value !== currentLang) {
         const newPathname = `/${value}${pathname.replace(/^\/(en|ar)/, "")}`;
         Cookies.set("NEXT_LOCALE", value);
         router.push(newPathname);

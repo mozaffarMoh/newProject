@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   AppBar,
@@ -14,16 +15,13 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { logoImage } from "@/constant/images";
 import LanguageToggle from "@/components/LanguageToggle/LanguageToggle";
+import useLanguage from "@/custom-hooks/useLanguage";
 
 const Header = () => {
-  let t = useTranslations();
-  let pathname = usePathname();
-  let isArabic = pathname.startsWith("/ar");
+  const { t, isArabic } = useLanguage();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isScreen600 = useMediaQuery("(max-width:650px)");
 
